@@ -104,7 +104,26 @@
 				</div>
 			</div>
 			<div class="col-lg-4">
+				<div class="panel panel-primary">
+					<div class="panel-heading">
+						<ul class="nav nav-tabs" role="tablist">
+							<li role="presentation" class="active"><a href="#">Home</a></li>
+							<li role="presentation"><a href="#">Profile</a></li>
+							<li role="presentation"><a href="#">Messages</a></li>
+						</ul>
+					</div>
+					<div class="panel-body">
+						<div >
+                            <textarea id="message1" cols="44" rows="15"></textarea>
+						</div>
+						<div class="input-group">
 
+							<input type="text" id="input1" class="form-control" aria-label="Amount (to the nearest dollar)">
+							<span class="btn input-group-addon" id="sub1">发送</span>
+							<span class="btn input-group-addon">0.0</span>
+						</div>
+					</div>
+				</div>
 			</div>
 
 			<div class="col-lg-2">
@@ -156,5 +175,62 @@
 			
 		});
 	</script>
+
+    <script type="text/javascript">
+        (function(){
+            var $ = function(id){return document.getElementById(id) || null;}
+
+            var wsServer = 'ws://127.0.0.1:8080';
+            var ws = new WebSocket(wsServer);
+            var isConnect = false;
+            ws.onopen = function (evt) {
+                console.log("ws1 链接成功");
+                isConnect = true;
+            };
+            ws.onclose = function (evt) {
+                console.log("Disconnected");
+            };
+            ws.onmessage = function (evt) {
+                var data = JSON.parse(evt.data);
+                switch (data.type) {
+                    case 'text':
+                        addMsg(data.msg);
+                        break;
+                    case 'num' :
+                        updataUserNum(data.msg);
+                        break;
+                }
+
+                console.log('Retrieved data from server1: ' + evt.data);
+            };
+            ws.onerror = function (evt) {
+                console.log('Error occured: ' + evt.data);
+            };
+
+
+
+
+            function sendMsg() {
+                if(isConnect){
+                    ws.send($('input1').value);
+                    $('input1').value = '';
+                }
+            }
+            function addMsg(msg) {
+                msg = JSON.parse(msg);
+                var text = '用户' + msg.user + '说：' + msg.text + '\n';
+                $('message1').value += text;
+                $('message1').scrollTop = $('message1').scrollHeight;
+            }
+            function updataUserNum(msg) {
+                $('userNum1').innerText = msg;
+            }
+            $('sub1').addEventListener('click',sendMsg,false);
+
+
+
+
+        })();
+    </script>
 </body>
 </html>
