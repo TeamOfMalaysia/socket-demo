@@ -72,6 +72,11 @@
 		.v-main{
 			padding-top: 30px;
 		}
+
+        #message1{
+            width: 100%;
+            height: 300px;
+        }
 	</style>
 </head>
 <body>
@@ -114,13 +119,14 @@
 					</div>
 					<div class="panel-body">
 						<div >
-                            <textarea id="message1" cols="44" rows="15"></textarea>
+                            <p>w1在线人数<span id="userNum1"></span></p>
+                            <div id="message1"></div>
 						</div>
 						<div class="input-group">
 
 							<input type="text" id="input1" class="form-control" aria-label="Amount (to the nearest dollar)">
 							<span class="btn input-group-addon" id="sub1">发送</span>
-							<span class="btn input-group-addon">0.0</span>
+							<span class="btn input-group-addon">😄</span>
 						</div>
 					</div>
 				</div>
@@ -219,7 +225,7 @@
             function addMsg(msg) {
                 msg = JSON.parse(msg);
                 var text = '用户' + msg.user + '说：' + msg.text + '\n';
-                $('message1').value += text;
+                $('message1').innerText += text;
                 $('message1').scrollTop = $('message1').scrollHeight;
             }
             function updataUserNum(msg) {
