@@ -104,8 +104,21 @@
 			</div>
 		</div>
 	</div>
+	
+	<div id="react-demo"></div>
 
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/react/0.14.0/react.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/react/0.14.0/react-dom.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.8.23/browser.min.js"></script>
+	
 	<script type="text/javascript" src="lib/jquery-1.11.3.min.js"></script>
+	
+	<script type="text/babel">
+		ReactDOM.render(
+			<div>Reactjs-demo, Hello, world!</div>,
+			document.getElementById('react-demo')
+		);
+	</script>
 	<script type="text/javascript">
 		$(function(){
 			$("#vMessage").on("click", function(){
@@ -166,11 +179,9 @@
             }
             $('sub1').addEventListener('click',sendMsg,false);
 
-
-
-
         })();
     </script>
 	<script src="http://vjs.zencdn.net/5.0.0/video.js"></script>
+	
 </body>
 </html>
