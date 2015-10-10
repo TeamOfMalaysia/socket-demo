@@ -34,8 +34,7 @@
 				<div class="well" style="height: 300px;">
 					<h3>Video Show</h3>
 				</div>
-				<!--<video id="my-video" class="video-js" controls preload="auto" width="550px"
-				poster="image/oceans-clip.png" data-setup="{}">
+				<!--<video id="my-video" class="video-js" controls preload="auto" width="550px" poster="image/oceans-clip.png" data-setup="{}">
 					<source src="image/oceans-clip.mp4" type='video/mp4'>
 					<p class="vjs-no-js">
 					To view this video please enable JavaScript, and consider upgrading to a web browser that
@@ -47,16 +46,7 @@
 			<div class="col-lg-4">
 				<div id="chat" class="well"></div>
 
-
-
-<!-- 				<div class="panel panel-primary">
-					<div class="panel-heading">
-						<ul class="nav nav-tabs" role="tablist">
-							<li role="presentation" class="active"><a href="#">Home</a></li>
-							<li role="presentation"><a href="#">Profile</a></li>
-							<li role="presentation"><a href="#">Messages</a></li>
-						</ul>
-					</div>
+				<!--<div class="panel panel-primary">
 					<div class="panel-body">
 						<div >
                             <p>w1在线人数<span id="userNum1"></span></p>
@@ -70,6 +60,7 @@
 						</div>
 					</div>
 				</div> -->
+
 			</div>
 
 			<div class="col-lg-2">
@@ -127,70 +118,68 @@
 	<!-- reactjs logic -->
 	<script type="text/babel" src="js/main.js"></script>
 
+	<script type="text/javascript">
+
+var wsServer = 'ws://192.168.0.6:8080';
+var ws = new WebSocket(wsServer);
+var isConnect = false;
+
+ws.onopen = function (evt) {
+    console.log("ws链接成功");
+    isConnect = true;
+};
+
+ws.onclose = function (evt) {
+    console.log("ws链接关闭");
+};
+
+ws.onmessage = function (evt) {
+    var data = JSON.parse(evt.data);
+    switch (data.type) {
+        case 'text':
+            addMsg(data.msg);
+            break;
+        case 'num' :
+            updataUserNum(data.msg);
+            break;
+    }
+
+    console.log('从Socket服务器获取消息: ' + evt.data);
+};
+
+ws.onerror = function (evt) {
+    console.log('ws链接失败: ' + evt.data);
+};
+
+function sendMsg() {
+    if(isConnect){
+        ws.send($('input1').value);
+        $('input1').value = '';
+    }
+}
+
+function addMsg(msg) {
+    msg = JSON.parse(msg);
+    var text = '用户' + msg.user + '说：' + msg.text + '\n';
+    $('message1').innerText += text;
+    $('message1').scrollTop = $('message1').scrollHeight;
+}
+
+function updataUserNum(msg) {
+    $('userNum1').innerText = msg;
+}
+
+$('sub1').addEventListener('click', sendMsg, false);
+
+	</script>
 	<!-- jquery logic -->
 	<script type="text/javascript">
 		$(function(){
 			$("#vMessage").on("click", function(){
 				$("#vMessageBar").toggleClass("active");
 			});
-			
 		});
 	</script>
-<!-- 
-    <script type="text/javascript">
-        (function(){
-            var $ = function(id){return document.getElementById(id) || null;}
-
-            var wsServer = 'ws://127.0.0.1:8080';
-            var ws = new WebSocket(wsServer);
-            var isConnect = false;
-            ws.onopen = function (evt) {
-                console.log("ws1 链接成功");
-                isConnect = true;
-            };
-            ws.onclose = function (evt) {
-                console.log("Disconnected");
-            };
-            ws.onmessage = function (evt) {
-                var data = JSON.parse(evt.data);
-                switch (data.type) {
-                    case 'text':
-                        addMsg(data.msg);
-                        break;
-                    case 'num' :
-                        updataUserNum(data.msg);
-                        break;
-                }
-
-                console.log('Retrieved data from server1: ' + evt.data);
-            };
-            ws.onerror = function (evt) {
-                console.log('Error occured: ' + evt.data);
-            };
-
-
-
-
-            function sendMsg() {
-                if(isConnect){
-                    ws.send($('input1').value);
-                    $('input1').value = '';
-                }
-            }
-            function addMsg(msg) {
-                msg = JSON.parse(msg);
-                var text = '用户' + msg.user + '说：' + msg.text + '\n';
-                $('message1').innerText += text;
-                $('message1').scrollTop = $('message1').scrollHeight;
-            }
-            function updataUserNum(msg) {
-                $('userNum1').innerText = msg;
-            }
-            $('sub1').addEventListener('click',sendMsg,false);
-
-        })();
-    </script>
 	
-	 -->
 </body>
 </html>
