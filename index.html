@@ -4,7 +4,7 @@
 	<meta http-equiv="content-type" content="text/html;charset=utf-8">
 	<link rel="stylesheet" type="text/css" href="lib/bootstrap-3.3.5-dist/css/bootstrap.min.css" />
 	<link rel="stylesheet" href="css/common.css">
-	<link href="http://vjs.zencdn.net/5.0.0/video-js.css" rel="stylesheet">
+	<!-- <link href="lib/videojs/video-js.css" rel="stylesheet"> -->
 </head>
 <body>
 	<div class="v-bar">
@@ -31,18 +31,25 @@
 		<div class="row">
 
 			<div class="col-lg-6">
-				<video id="my-video" class="video-js" controls preload="auto" width="550px"
+				<div class="well" style="height: 300px;">
+					<h3>Video Show</h3>
+				</div>
+				<!--<video id="my-video" class="video-js" controls preload="auto" width="550px"
 				poster="image/oceans-clip.png" data-setup="{}">
 					<source src="image/oceans-clip.mp4" type='video/mp4'>
 					<p class="vjs-no-js">
 					To view this video please enable JavaScript, and consider upgrading to a web browser that
 					<a href="http://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a>
 					</p>
-				</video>
+				</video> -->
 			</div>
 			
 			<div class="col-lg-4">
-				<div class="panel panel-primary">
+				<div id="chat" class="well"></div>
+
+
+
+<!-- 				<div class="panel panel-primary">
 					<div class="panel-heading">
 						<ul class="nav nav-tabs" role="tablist">
 							<li role="presentation" class="active"><a href="#">Home</a></li>
@@ -62,7 +69,7 @@
 							<span class="btn input-group-addon">😄</span>
 						</div>
 					</div>
-				</div>
+				</div> -->
 			</div>
 
 			<div class="col-lg-2">
@@ -104,17 +111,23 @@
 			</div>
 		</div>
 	</div>
-	
-	<div id="react-demo"></div>
 
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/react/0.14.0/react.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/react/0.14.0/react-dom.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.8.23/browser.min.js"></script>
-	
+
+
+	<!-- reactjs -->
+	<script src="lib/react-0.14.0/build/react.min.js"></script>
+    <script src="lib/react-0.14.0/build/react-dom.min.js"></script>
+    <script src="lib/browser.min.js"></script>
+
+	<!-- jquery -->
 	<script type="text/javascript" src="lib/jquery-1.11.3.min.js"></script>
-	
+	<!-- video -->
+	<!-- <script src="lib/videojs/video.js"></script> -->
+
+	<!-- reactjs logic -->
 	<script type="text/babel" src="js/main.js"></script>
 
+	<!-- jquery logic -->
 	<script type="text/javascript">
 		$(function(){
 			$("#vMessage").on("click", function(){
@@ -123,7 +136,7 @@
 			
 		});
 	</script>
-
+<!-- 
     <script type="text/javascript">
         (function(){
             var $ = function(id){return document.getElementById(id) || null;}
@@ -177,7 +190,7 @@
 
         })();
     </script>
-	<script src="http://vjs.zencdn.net/5.0.0/video.js"></script>
 	
+	 -->
 </body>
 </html>
