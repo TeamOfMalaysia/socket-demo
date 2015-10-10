@@ -74,7 +74,7 @@ body{
 	height: 300px;
 }
 
-.chat-content{
+.chat-list{
 	height: 300px;
 	overflow-y: auto;
 }

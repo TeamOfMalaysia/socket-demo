@@ -18,18 +18,31 @@ var ChatPersonCount = React.createClass({
 
 });
 
+// var ChatCommentOther = React.createClass({
+
+// });
+
+// var ChatCommentMine = React.createClass({
+
+// });
+
 var ChatList = React.createClass({
 	
 	render: function(){
-		var createItem = function(itemText, index){
-			return <li key={index + itemText}>{itemText}</li>;
-		};
+
+		var commentNode = this.props.items.map(function(comment, i){
+			return <div key={i}>{comment}</div>;
+		});
 
 		//调整滚屏
 		//var dChatList = React.findDOMNode(this.refs.chatList);
 		//dChatList.scrollTop = dChatList.scrollHeight;
 
-		return <ul className='chat-content' rel='chatList'>{this.props.items.map(createItem)}</ul>;
+		return (
+			<div className='chat-list' rel='chatList'>
+				{commentNode}
+			</div>
+		);
 	}
 
 });
@@ -40,7 +53,7 @@ var ChatForm = React.createClass({
 		//阻止页面刷新
 		e.preventDefault();
 		//comment
-		var co = React.findDOMNode(this.refs.commentInput).value.trim();
+		var co = ReactDOM.findDOMNode(this.refs.commentInput).value.trim();
 
 		if (!co) {
 			return;
@@ -48,7 +61,7 @@ var ChatForm = React.createClass({
 		//pass to handle
 		this.props.onHandleSubmit({comment: co});
 		//clear input
-		React.findDOMNode(this.refs.commentInput).value = "";
+		ReactDOM.findDOMNode(this.refs.commentInput).value = "";
 		return;
 	},
 
