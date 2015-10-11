@@ -120,44 +120,6 @@
 
 	<script type="text/javascript">
 
-var wsServer = 'ws://192.168.0.6:8080';
-var ws = new WebSocket(wsServer);
-var isConnect = false;
-
-ws.onopen = function (evt) {
-    console.log("ws链接成功");
-    isConnect = true;
-};
-
-ws.onclose = function (evt) {
-    console.log("ws链接关闭");
-};
-
-ws.onmessage = function (evt) {
-    var data = JSON.parse(evt.data);
-    switch (data.type) {
-        case 'text':
-            addMsg(data.msg);
-            break;
-        case 'num' :
-            updataUserNum(data.msg);
-            break;
-    }
-
-    console.log('从Socket服务器获取消息: ' + evt.data);
-};
-
-ws.onerror = function (evt) {
-    console.log('ws链接失败: ' + evt.data);
-};
-
-function sendMsg() {
-    if(isConnect){
-        ws.send($('input1').value);
-        $('input1').value = '';
-    }
-}
-
 function addMsg(msg) {
     msg = JSON.parse(msg);
     var text = '用户' + msg.user + '说：' + msg.text + '\n';
@@ -168,8 +130,6 @@ function addMsg(msg) {
 function updataUserNum(msg) {
     $('userNum1').innerText = msg;
 }
-
-$('sub1').addEventListener('click', sendMsg, false);
 
 	</script>
 	<!-- jquery logic -->
