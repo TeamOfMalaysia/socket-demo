@@ -38,7 +38,7 @@ var ChatHead = React.createClass({
 var ChatPersonCount = React.createClass({
 
 	render: function(){
-		return <p id='personCount'>Socket在线人数</p>;
+		return <p id='personCount'>Socket在线人数{this.props.onlineCount}</p>;
 	}
 
 });
@@ -132,19 +132,24 @@ var Chat = React.createClass({
 
 	//load socket
 	loadInfoFromServer: function(){
-		ws.onmessage = function (evt) {
-		    var data = JSON.parse(evt.data);
-		    switch (data.type) {
+
+		var that = this;
+		ws.onmessage = function (info) {
+
+		    var msg = JSON.parse(info.data);
+		    console.log(msg);
+		    switch (msg.type) {
 		        case 'text':
 		            //addMsg(data.msg);
-		            this.setState({ comment: data.msg });
+		            //that.setState({ comment: data.msg });
 		            break;
-		        case 'num' :
+		        case 'onlineCount' :
+		        	that.setState({ onlineCount: msg.msg });
 		            //updataUserNum(data.msg);
 		            break;
 		    }
 
-		    console.log('从Socket服务器获取消息: ' + evt.data);
+		    //console.log('从Socket服务器获取消息: ' + evt.data);
 		};
 	},
 
@@ -154,7 +159,8 @@ var Chat = React.createClass({
 			comment: { 
 				user: "",
 				text: ""
-			}
+			},
+			onlineCount: 0
 		}
 	},
 
@@ -174,7 +180,7 @@ var Chat = React.createClass({
 		return (
 			<div>
 				<ChatHead />
-				<ChatPersonCount />
+				<ChatPersonCount onlineCount={this.state.onlineCount} />
 				<ChatList items={this.state.items} />
 				<ChatForm onHandleSubmit={this.handleSubmit} />
 			</div>
