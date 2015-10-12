@@ -18,7 +18,6 @@ ws.onclose = function (evt) {
  * {type: "text", msg: {}}
  * {type: "num", msg: {}}
  */
-
 ws.onerror = function (evt) {
     console.log('ws链接失败: ' + evt.data);
 };
@@ -29,7 +28,7 @@ ws.onerror = function (evt) {
 var ChatHead = React.createClass({
 
 	render: function(){
-		return <h3>CHAT</h3>;
+		return <h3>Chat</h3>;
 	}
 
 });
@@ -48,8 +47,8 @@ var ChatCommentOther = React.createClass({
 	render: function(){
 		return (
 			<div className='chat-comment_other'>
-				<span className='chat-comment_author'></span>
-				<span className='chat-comment_content'></span>
+				<span className='chat-comment_author'>{this.props.comment.user}</span>说：
+				<span className='chat-comment_content'>{this.props.comment.text}</span>
 			</div>
 		);
 	}
@@ -73,10 +72,16 @@ var ChatList = React.createClass({
 	render: function(){
 
 		var commentNode = this.props.items.map(function(item, i){
-			//return <div key={i}>{comment}</div>;
-			return (
-				<ChatCommentMine comment={item} key={i+item.text}/>
-			);
+			if (item.user != "Young") {
+				return (
+					<ChatCommentOther comment={item} key={i+item.text} />
+				)
+			}else{
+				//return <div key={i}>{comment}</div>;
+				return (
+					<ChatCommentMine comment={item} key={i+item.text} s/>
+				);
+			}
 		});
 
 		//调整滚屏
@@ -136,15 +141,22 @@ var Chat = React.createClass({
 		var that = this;
 		ws.onmessage = function (info) {
 
-		    var msg = JSON.parse(info.data);
-		    console.log(msg);
-		    switch (msg.type) {
+		    var info = JSON.parse(info.data);
+
+		    switch (info.type) {
 		        case 'text':
 		            //addMsg(data.msg);
 		            //that.setState({ comment: data.msg });
+					
+					//拼接字符串
+					var nextItems = that.state.items.concat([info.msg]);
+					//清空comment
+					var nextComment = {};
+					that.setState({ items: nextItems, comment: nextComment });
+
 		            break;
 		        case 'onlineCount' :
-		        	that.setState({ onlineCount: msg.msg });
+		        	that.setState({ onlineCount: info.msg });
 		            //updataUserNum(data.msg);
 		            break;
 		    }
