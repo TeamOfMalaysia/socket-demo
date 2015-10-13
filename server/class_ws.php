@@ -60,6 +60,10 @@ class Ws{
 				if(!empty($this->function['send'])) {
 					call_user_func_array($this->function['send'], array($data, $index, $this));
 				}
+
+				if(!empty($this->function['count'])) {
+					call_user_func_array($this->function['count'], array($this));
+				}
 			}
 			sleep(1);
 		}

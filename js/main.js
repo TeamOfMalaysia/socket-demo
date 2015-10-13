@@ -1,6 +1,6 @@
 var $ = function(id){return document.getElementById(id) || null;}
 
-var wsServer = 'ws://192.168.0.6:8080';
+var wsServer = 'ws://127.0.0.1:8080';
 var ws = new WebSocket(wsServer);
 
 var isConnect = false;

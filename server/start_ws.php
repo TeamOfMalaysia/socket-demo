@@ -1,9 +1,10 @@
 <?php
 require('class_ws.php');
-$ws = new Ws('192.168.0.6', '8080', 10);
+$ws = new Ws('10.1.80.248', '8080', 10);
 $ws->function['add'] = 'user_add_callback';
 $ws->function['send'] = 'send_callback';
 $ws->function['close'] = 'close_callback';
+$ws->function['count'] = 'count_callback';
 $ws->start_server();
 
 //回调函数们
@@ -17,19 +18,25 @@ function close_callback($ws) {
 	send_to_all($data, 'onlineCount', $ws);
 }
 
+//心跳
+function count_callback($ws) {
+	$data = count($ws->accept);
+	send_to_all($data, 'onlineCount', $ws);
+}
+
 function send_callback($data, $index, $ws) {
 	$data = array(
-						'text' => $data,
-						'user' => $index,
-						);
-	send_to_all($data, 'text', $ws);
+		'text' => $data,
+		'user' => $index,
+	);
+	send_to_all($data, 'onlineCount', $ws);
 }
 
 function send_to_all($data, $type, $ws){
 	$res = array(
-			'msg' => $data,
-			'type' => $type,
-			);
+		'msg' => $data,
+		'type' => $type,
+	);
 	$res = json_encode($res);
 	$res = $ws->frame($res);
 	foreach ($ws->accept as $key => $value) {
