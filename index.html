@@ -7,25 +7,7 @@
 	<!-- <link href="lib/videojs/video-js.css" rel="stylesheet"> -->
 </head>
 <body>
-	<div class="v-bar">
-		<div class="v-bar-memu">
-			<ul class="v-bar-list">
-				<li title="login"><span class="glyphicon glyphicon-user"></span></li>
-				<li title="focus"><span class="glyphicon glyphicon-star"></span></li>
-				<li title="message" id="vMessage"><span class="glyphicon glyphicon-envelope"></span></li>
-			</ul>
-		</div>
-
-		<div class="v-bm" id="vMessageBar">
-			<div class="v-bm-wrap">
-				<h2>Message</h2>
-				<p>This is a message1</p>
-				<p>This is a message2</p>
-				<p>This is a message3</p>
-			</div>
-		</div>
-
-	</div>
+	<div class="v-bar" id="bar"></div>
 
 	<div class="container v-main">
 		<div class="row">
@@ -45,60 +27,11 @@
 			
 			<div class="col-lg-4">
 				<div id="chat" class="well"></div>
-
-				<!--<div class="panel panel-primary">
-					<div class="panel-body">
-						<div >
-                            <p>w1在线人数<span id="userNum1"></span></p>
-                            <div id="message1"></div>
-						</div>
-						<div class="input-group">
-
-							<input type="text" id="input1" class="form-control" aria-label="Amount (to the nearest dollar)">
-							<span class="btn input-group-addon" id="sub1">发送</span>
-							<span class="btn input-group-addon">😄</span>
-						</div>
-					</div>
-				</div> -->
-
 			</div>
 
 			<div class="col-lg-2">
-				<div class="panel panel-primary">
-				  <!-- Default panel contents -->
-				  <div class="panel-heading">Notice</div>
-				  <div class="panel-body">
-				    <p>Some default panel content here. Nulla vitae elit libero, a pharetra augue. Aenean lacinia bibendum nulla sed consectetur.</p>
-				  </div>
-				</div>
-				<div class="panel panel-primary">
-				      <!-- Default panel contents -->
-				      <div class="panel-heading">Ranking</div>
-
-				      <!-- Table -->
-				      <table class="table">
-				        <thead>
-				          <tr>
-				            <th>First Name</th>
-				            <th>Last Name</th>
-				          </tr>
-				        </thead>
-				        <tbody>
-				          <tr>
-				            <td>Mark</td>
-				            <td>Otto</td>
-				          </tr>
-				          <tr>
-				            <td>Jacob</td>
-				            <td>Thornton</td>
-				          </tr>
-				          <tr>
-				            <td>Larry</td>
-				            <td>the Bird</td>
-				          </tr>
-				        </tbody>
-				      </table>
-				</div>
+				<div id="notice"></div>
+				<div id="rank"></div>
 			</div>
 		</div>
 	</div>
@@ -110,32 +43,14 @@
     <script src="lib/react-0.14.0/build/react-dom.min.js"></script>
     <script src="lib/browser.min.js"></script>
 
-	<!-- jquery -->
-	<script type="text/javascript" src="lib/jquery-1.11.3.min.js"></script>
 	<!-- video -->
 	<!-- <script src="lib/videojs/video.js"></script> -->
 
 	<!-- reactjs logic -->
+	<script type="text/babel" src="js/bar.js"></script>
 	<script type="text/babel" src="js/main.js"></script>
+	<script type="text/babel" src="js/notice.js"></script>
+	<script type="text/babel" src="js/rank.js"></script>
 
-	<script type="text/javascript">
-
-function addMsg(msg) {
-    msg = JSON.parse(msg);
-    var text = '用户' + msg.user + '说：' + msg.text + '\n';
-    $('message1').innerText += text;
-    $('message1').scrollTop = $('message1').scrollHeight;
-}
-
-	</script>
-	<!-- jquery logic -->
-	<script type="text/javascript">
-		$(function(){
-			$("#vMessage").on("click", function(){
-				$("#vMessageBar").toggleClass("active");
-			});
-		});
-	</script>
-	
 </body>
 </html>

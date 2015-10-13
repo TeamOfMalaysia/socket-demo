@@ -8,6 +8,10 @@ body{
 	top: 0px;
 	z-index: 10;
 }
+
+.v-bar-wrap{
+	height: 100%
+}
 .v-bar-memu{
 	background-color: rgb(33, 2, 107);
 	overflow: hidden;
