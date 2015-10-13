@@ -25,11 +25,16 @@ function count_callback($ws) {
 }
 
 function send_callback($data, $index, $ws) {
+	$type = 'text';
+	if(strpos($data,':')) {
+		$data = explode(':', $data);
+		$type = $data[0];
+	}
 	$data = array(
 		'text' => $data,
 		'user' => $index,
 	);
-	send_to_all($data, 'text', $ws);
+	send_to_all($data, $type, $ws);
 }
 
 function send_to_all($data, $type, $ws){
