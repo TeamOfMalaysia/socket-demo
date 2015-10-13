@@ -143,7 +143,7 @@ var Chat = React.createClass({
 		ws.onmessage = function (info) {
 
 		    var info = JSON.parse(info.data);
-
+			console.log(info);
 		    switch (info.type) {
 		        case 'text':
 		            //addMsg(data.msg);

@@ -1,6 +1,6 @@
 <?php
 require('class_ws.php');
-$ws = new Ws('10.1.80.248', '8080', 10);
+$ws = new Ws('0.0.0.0', '8080', 10);
 $ws->function['add'] = 'user_add_callback';
 $ws->function['send'] = 'send_callback';
 $ws->function['close'] = 'close_callback';
@@ -29,7 +29,7 @@ function send_callback($data, $index, $ws) {
 		'text' => $data,
 		'user' => $index,
 	);
-	send_to_all($data, 'onlineCount', $ws);
+	send_to_all($data, 'text', $ws);
 }
 
 function send_to_all($data, $type, $ws){
