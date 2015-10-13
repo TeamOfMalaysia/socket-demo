@@ -39,6 +39,7 @@ class Ws{
 					$this->add_accept($accept);
 					continue;
 				}
+
 				$index = array_search($v, $this->accept);
 				if ($index === NULL) {
 					continue;
@@ -55,6 +56,7 @@ class Ws{
 					continue;
 				}
 				$data = $this->decode($data);
+
 				if(!empty($this->function['send'])) {
 					call_user_func_array($this->function['send'], array($data, $index, $this));
 				}
