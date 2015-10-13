@@ -74,7 +74,13 @@ body{
 	height: 300px;
 }
 
-.chat-content{
+.chat-list{
 	height: 300px;
 	overflow-y: auto;
+}
+.chat-comment_mine{
+	text-align: right;
+}
+.chat-comment_other{
+	text-align: left;
 }
