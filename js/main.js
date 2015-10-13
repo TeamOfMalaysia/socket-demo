@@ -1,11 +1,7 @@
 var $ = function(id){return document.getElementById(id) || null;}
 
-<<<<<<< HEAD
 var wsServer = 'ws://127.0.0.1:8080';
 
-=======
-var wsServer = 'ws://10.1.80.248:8080';
->>>>>>> 07982580a0aedffcdb808e0020e2c10024d2e113
 var ws = new WebSocket(wsServer);
 
 var isConnect = false;
