@@ -1,6 +1,6 @@
 var $ = function(id){return document.getElementById(id) || null;}
 
-var wsServer = 'ws://192.168.0.6:8080';
+var wsServer = 'ws://10.1.80.248:8080';
 var ws = new WebSocket(wsServer);
 
 var isConnect = false;
@@ -72,7 +72,7 @@ var ChatList = React.createClass({
 	render: function(){
 
 		var commentNode = this.props.items.map(function(item, i){
-			if (item.user != "Young") {
+			if (item.user != "0") {
 				return (
 					<ChatCommentOther comment={item} key={i+item.text} />
 				)
@@ -85,7 +85,7 @@ var ChatList = React.createClass({
 		});
 
 		//调整滚屏
-		//var dChatList = React.findDOMNode(this.refs.chatList);
+		//var dChatList = this.refs.chatList;
 		//dChatList.scrollTop = dChatList.scrollHeight;
 
 		return (
@@ -103,7 +103,7 @@ var ChatForm = React.createClass({
 		//阻止页面刷新
 		e.preventDefault();
 		//comment
-		var commentContent = ReactDOM.findDOMNode(this.refs.commentInput).value.trim();
+		var commentContent = this.refs.commentInput.value.trim();
 
 		if (!commentContent) {
 			return;
@@ -117,7 +117,7 @@ var ChatForm = React.createClass({
 		};
 
 		//clear input
-		ReactDOM.findDOMNode(this.refs.commentInput).value = "";
+		this.refs.commentInput.value = "";
 		return;
 	},
 
