@@ -1,2 +1,2 @@
 # socket-demo
-socket-demo initialize by AJ &amp; REACT
+socket-demo initialize by ReactJS
