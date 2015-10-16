@@ -24,8 +24,6 @@ ws.onerror = function (evt) {
 };
 
 
-
-
 var ChatHead = React.createClass({
 
 	render: function(){
