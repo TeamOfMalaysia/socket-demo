@@ -1,6 +1,6 @@
 var $ = function(id){return document.getElementById(id) || null;}
 
-var wsServer = 'ws://127.0.0.1:8080';
+var wsServer = 'ws://10.1.10.99:8080';
 
 var ws = new WebSocket(wsServer);
 
@@ -40,7 +40,7 @@ var ChatHead = React.createClass({
 var ChatPersonCount = React.createClass({
 
 	render: function(){
-		return <p id='personCount'>Socket在线人数{this.props.onlineCount}</p>;
+		return <p id='personCount'>Socket在线人数{this.props.onlineCount}, id:{this.props.uid}</p>;
 	}
 
 });
@@ -63,7 +63,7 @@ var ChatCommentMine = React.createClass({
 	render: function(){
 		return (
 			<div className='chat-comment_mine'>
-				<span>{this.props.comment.text}</span>
+				我说：<span>{this.props.comment.text}</span>
 			</div>
 		);
 	}
@@ -112,7 +112,7 @@ var ChatForm = React.createClass({
 			return;
 		};
 		//pass to handle
-		this.props.onHandleSubmit({user: "Young", text: commentContent});
+		//this.props.onHandleSubmit({user: "Young", text: commentContent});
 
 		//ws handle
 		if (isConnect) {
@@ -147,7 +147,11 @@ var Chat = React.createClass({
 
 		var that = this;
 		ws.onmessage = function (info) {
-
+			//对方刷新页面的时候回收到一个空数据
+			//todo 以后处理
+			if(info.data == ""){
+				return;
+			}
 		    var json = JSON.parse(info.data);
 			console.log(json);
 		    switch (json.type) {
@@ -160,12 +164,13 @@ var Chat = React.createClass({
 					that.setState({ items: nextItems, comment: nextComment });
 
 		            break;
-		        case 'onlineCount' :
-		        	that.setState({ onlineCount: json.msg });
+		        case 'onlineCount':
+		        	that.setState({ onlineCount: json.msg.count });
 		            break;
 
-		        case 'start' :
-		        	User.id = json.msg;
+		        case 'start':
+		        	that.setState({ onlineCount: json.count, uid: json.uid });
+		        	User.id = json.uid;
 		        	break;
 		    }
 
@@ -179,7 +184,8 @@ var Chat = React.createClass({
 				user: "",
 				text: ""
 			},
-			onlineCount: 0
+			onlineCount: 0,
+			uid: 0
 		}
 	},
 
@@ -199,7 +205,7 @@ var Chat = React.createClass({
 		return (
 			<div>
 				<ChatHead />
-				<ChatPersonCount onlineCount={this.state.onlineCount} />
+				<ChatPersonCount onlineCount={this.state.onlineCount} uid={this.state.uid}/>
 				<ChatList items={this.state.items} />
 				<ChatForm onHandleSubmit={this.handleSubmit} />
 			</div>

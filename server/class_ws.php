@@ -5,7 +5,8 @@ class Ws{
 	private $maxuser = 10;
 	public  $accept = array(); //连接的客户端
 	private $cycle = array(); //循环连接池
-	private $isHand = array(); 
+	private $isHand = array();
+
 	/*
 		接受三个回调函数，分别在新用户连接、有消息到达、用户断开时触发
 		function add、function send、function close
@@ -25,11 +26,15 @@ class Ws{
 		socket_bind($this->socket, $this->host, $this->port);
 		//最多10个人连接，超过的客户端连接会返回WSAECONNREFUSED错误
 		socket_listen($this->socket, $this->maxuser); 
+
 		while(TRUE) {
+
 			$this->cycle = $this->accept;
 			$this->cycle[] = $this->socket;
+
 			//阻塞用，有新连接时才会结束
 			socket_select($this->cycle, $write, $except, null);
+
 			foreach ($this->cycle as $k => $v) {
 				if($v === $this->socket) {
 					if (($accept = socket_accept($v)) < 0) {
@@ -61,8 +66,11 @@ class Ws{
 					call_user_func_array($this->function['send'], array($data, $index, $this));
 				}
 			}
+			
 		}
+
 	}
+
 	//增加一个初次连接的用户
 	private function add_accept($accept) {
 		$this->accept[] = $accept;
@@ -70,6 +78,7 @@ class Ws{
 		$index = end($index);
 		$this->isHand[$index] = FALSE;
 	}
+
 	//关闭一个连接
 	private function close($accept) {
 		$index = array_search($accept, $this->accept);
@@ -80,6 +89,7 @@ class Ws{
 			call_user_func_array($this->function['close'], array($this));
 		}
 	}
+
 	//响应升级协议
 	private function upgrade($accept, $data, $index) {
 		if (preg_match("/Sec-WebSocket-Key: (.*)\r\n/",$data,$match)) {
@@ -92,6 +102,7 @@ class Ws{
 			$this->isHand[$index] = TRUE;
 		}
 	}
+
 	//体力活
 	public function frame($s){
 		$a = str_split($s, 125);
@@ -104,6 +115,7 @@ class Ws{
 		}
 		return $ns;
 	}
+
 	//体力活
 	public function decode($buffer) {
 		$len = $masks = $data = $decoded = null;
