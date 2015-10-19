@@ -51,7 +51,7 @@ class Ws{
 				if (!$this->isHand[$index]) {
 					$this->upgrade($v, $data, $index);
 					if(!empty($this->function['add'])) {
-						call_user_func_array($this->function['add'], array($this));
+						call_user_func_array($this->function['add'], array($this,$index));
 					}
 					continue;
 				}

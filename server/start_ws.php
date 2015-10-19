@@ -1,6 +1,6 @@
 <?php
 require('class_ws.php');
-$ws = new Ws('0.0.0.0', '8080', 10);
+$ws = new Ws('127.0.0.1', '8080', 10);
 $ws->function['add'] = 'user_add_callback';
 $ws->function['send'] = 'send_callback';
 $ws->function['close'] = 'close_callback';
@@ -8,9 +8,11 @@ $ws->function['count'] = 'count_callback';
 $ws->start_server();
 
 //回调函数们
-function user_add_callback($ws) {
-	$data = count($ws->accept);
- 	send_to_all($data, 'onlineCount', $ws);
+function user_add_callback($ws,$index) {
+	$count = count($ws->accept);
+	$data['count'] = $count;
+	$data['uid'] = $index;
+ 	send_to_all($data, 'start', $ws);
 }
 
 function close_callback($ws) {

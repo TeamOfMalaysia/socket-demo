@@ -6,6 +6,10 @@ var ws = new WebSocket(wsServer);
 
 var isConnect = false;
 
+var User = {};
+
+User.id = 0;
+
 ws.onopen = function (evt) {
     console.log("ws链接成功");
     isConnect = true;
@@ -71,7 +75,7 @@ var ChatList = React.createClass({
 	render: function(){
 
 		var commentNode = this.props.items.map(function(item, i){
-			if (item.user != "0") {
+			if (item.user != User.id) {
 				return (
 					<ChatCommentOther comment={item} key={i+item.text} />
 				)
@@ -123,10 +127,14 @@ var ChatForm = React.createClass({
 	render: function(){
 		return (
 			<form onSubmit={this.commentSubmit}>
-				<input type='text' ref="commentInput"/>
-				<button type='submit' placeholder='say something'>Submit</button>
+				<div className="input-group">
+		        	<input type="text" className="form-control" ref="commentInput" placeholder="发送消息" />
+					<span className="input-group-btn">
+						<button className="btn btn-default" type='submit'>Submit</button>
+					</span>
+				</div>
 			</form>
-		);
+		)
 	}
 
 });
@@ -140,27 +148,27 @@ var Chat = React.createClass({
 		var that = this;
 		ws.onmessage = function (info) {
 
-		    var info = JSON.parse(info.data);
-			console.log(info);
-		    switch (info.type) {
+		    var json = JSON.parse(info.data);
+			console.log(json);
+		    switch (json.type) {
 		        case 'text':
-		            //addMsg(data.msg);
-		            //that.setState({ comment: data.msg });
 					
 					//拼接字符串
-					var nextItems = that.state.items.concat([info.msg]);
+					var nextItems = that.state.items.concat([json.msg]);
 					//清空comment
 					var nextComment = {};
 					that.setState({ items: nextItems, comment: nextComment });
 
 		            break;
 		        case 'onlineCount' :
-		        	that.setState({ onlineCount: info.msg });
-		            //updataUserNum(data.msg);
+		        	that.setState({ onlineCount: json.msg });
 		            break;
+
+		        case 'start' :
+		        	User.id = json.msg;
+		        	break;
 		    }
 
-		    //console.log('从Socket服务器获取消息: ' + evt.data);
 		};
 	},
 
@@ -201,6 +209,6 @@ var Chat = React.createClass({
 });
 
 ReactDOM.render(
-	<Chat />,
+	<Chat User={User}/>,
 	document.getElementById("chat")
 );
