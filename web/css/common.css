@@ -1,0 +1,90 @@
+body{
+	background-color: #E6CED9;
+}
+.v-bar{
+	height: 100%;
+	position: absolute;
+	left: 0px;
+	top: 0px;
+	z-index: 10;
+}
+
+.v-bar-wrap{
+	height: 100%
+}
+.v-bar-memu{
+	background-color: rgb(33, 2, 107);
+	overflow: hidden;
+	height: 100%;
+	width: 50px;
+}
+
+.v-bar-list{
+	list-style: none;
+	border: 0px;
+	margin: 0px;
+	padding: 0px;
+	color: #fff;
+	margin-top: 100px;
+	font-size: 20px;
+	width: 50px;
+}
+
+.v-bar-list li{
+	padding: 10px 0px;
+	cursor: pointer;
+	user-select:none;
+	-webkit-user-select:none;
+	-moz-user-select:none;
+	-ms-user-select:none;
+}
+
+.v-bar-list span{
+	display: block;
+	margin: 0px auto;
+	width: 20px;
+	height: 20px;
+}
+
+.v-bm{
+	position: absolute;
+	top: 0px;
+	left: 50px;
+	width: 0px;
+	height: 100%;
+	background-color: #333;
+	color: #fff;
+	overflow: hidden;
+	transition: all 0.2s ease-out;
+	z-index: 5;
+}
+
+.v-bm-wrap{
+	padding: 20px;
+	width: 200px;
+}
+
+.v-bm.active{
+	width: 200px;
+}
+
+.v-main{
+	padding-top: 30px;
+	padding-left: 60px;
+}
+
+#message1{
+	width: 100%;
+	height: 300px;
+}
+
+.chat-list{
+	height: 300px;
+	overflow-y: auto;
+}
+.chat-comment_mine{
+	text-align: right;
+}
+.chat-comment_other{
+	text-align: left;
+}
