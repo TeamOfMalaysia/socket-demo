@@ -14,7 +14,7 @@ var data = {
 		},
 		{
 			firstName: "Larry",
-			lastName: "the Bird"
+			lastName: "The Bird"
 		},
 	],
 }
