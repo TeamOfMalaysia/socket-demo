@@ -1,6 +1,11 @@
 var React = require('react');
 var ReactDOM = require('react-dom');
 
+//var fs = require("fs");
+//var long = require("../lib/lang.js");
+//var ByteBuffer = require('../lib/bytebuffer.min.js');
+//var ProtoBuf = require('../lib/protobuf.min.js');
+
 var $ = function(id){return document.getElementById(id) || null;}
 
 var wsServer = 'ws://10.1.10.99:8080';

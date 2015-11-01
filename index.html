@@ -35,8 +35,12 @@
 			</div>
 		</div>
 	</div>
-
-
+	<script type="text/javascript" src="web/lib/jquery-1.11.3.min.js"></script>
+	
+	<!-- protobuff -->
+	<script type="text/javascript" src="web/lib/long.js"></script>
+	<script type="text/javascript" src="web/lib/bytebuffer.min.js"></script>
+	<script type="text/javascript" src="web/lib/protobuf.min.js"></script>
 
 	<!-- reactjs -->
 	<!--<script src="web/lib/react-0.14.0/build/react.min.js"></script>-->
@@ -48,6 +52,21 @@
 
 	<!-- reactjs logic -->
 	<script type="text/javascript" src="web/build/index.min.js"></script>
+	
+	<!-- jQuery -->
+	<script>
+		$(function(){
+			if (typeof dcodeIO === 'undefined' || !dcodeIO.ProtoBuf) {
+				throw(new Error("ProtoBuf.js is not present. Please see www/index.html for manual setup instructions."));
+			}
+			// Initialize ProtoBuf.js
+			var ProtoBuf = dcodeIO.ProtoBuf;
+			var Message = ProtoBuf.loadProtoFile("./test.proto").build("Message");
+			console.log(Message);
+		});
+		
+	</script>
+	
 	<!--<script type="text/babel" src="js/bar.js"></script>
 	<script type="text/babel" src="js/main.js"></script>
 	<script type="text/babel" src="js/notice.js"></script>
